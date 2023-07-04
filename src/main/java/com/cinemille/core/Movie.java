@@ -19,26 +19,26 @@ public class Movie {
     @NonNull
     private String description;
     @NonNull
-    private LocalDate startingDate;
+    private LocalDate startDate;
     @NonNull
-    private LocalDate endingDate;
-
-    @NonNull
-    public LocalDate getStartingDate() {
-        return startingDate;
-    }
-
-    public void setStartingDate(@NonNull LocalDate startingDate) {
-        this.startingDate = startingDate;
-    }
+    private LocalDate endDate;
 
     @NonNull
-    public LocalDate getEndingDate() {
-        return endingDate;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setEndingDate(@NonNull LocalDate endingDate) {
-        this.endingDate = endingDate;
+    public void setStartDate(@NonNull LocalDate startingDate) {
+        this.startDate = startingDate;
+    }
+
+    @NonNull
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(@NonNull LocalDate endingDate) {
+        this.endDate = endingDate;
     }
 
     @NonNull
