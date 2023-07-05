@@ -6,6 +6,7 @@ import { MoviesListComponent } from './components/movies-list/movies-list.compon
 import {HttpClientModule} from "@angular/common/http";
 import {TableModule} from "primeng/table";
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    TableModule
+    TableModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
