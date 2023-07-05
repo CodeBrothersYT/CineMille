@@ -8,7 +8,7 @@ import {TableModule} from "primeng/table";
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MenubarModule} from "primeng/menubar";
-import { MoviesHistoryComponent } from './movies-history/movies-history.component';
+import { MoviesHistoryComponent } from './components/movies-history/movies-history.component';
 
 @NgModule({
   declarations: [

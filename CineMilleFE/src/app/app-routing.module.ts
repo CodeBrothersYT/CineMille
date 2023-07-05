@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {HomePageComponent} from "./components/home-page/home-page.component";
-import {MoviesHistoryComponent} from "./movies-history/movies-history.component";
+import {MoviesHistoryComponent} from "./components/movies-history/movies-history.component";
 
 const routes: Routes = [
   {

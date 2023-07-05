@@ -23,15 +23,25 @@ public class MovieController {
         this.csvMoviesReader = csvMoviesReader;
     }
 
-    @GetMapping("/movies")
+    @GetMapping("/movies/{history}")
     @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
     public List<MovieDTO> getAllMovies(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @PathVariable(required = false) boolean history) {
 
         MovieDateSpecification movieDateSpecification = new MovieDateSpecification(startDate, endDate);
-        List<Movie> allMovies = movieFacadeImpl.getAllMovies(movieDateSpecification);
-        return allMovies.stream().map(mapper::toDto).toList();
+
+        if(history){
+            return movieFacadeImpl.getAllMovies(movieDateSpecification)
+                    .stream()
+                    .filter(movie -> movie.getEndDate().isBefore(LocalDate.now())).map(mapper::toDto).toList();
+        }
+        return movieFacadeImpl.getAllMovies(movieDateSpecification)
+                .stream()
+                .filter(movie -> movie.getEndDate().isAfter(LocalDate.now()))
+                .map(mapper::toDto).toList();
+
     }
 
     @GetMapping("/import-movies")

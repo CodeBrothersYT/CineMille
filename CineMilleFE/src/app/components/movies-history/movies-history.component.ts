@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MoviesService} from "../services/movies.service";
+import {MoviesService} from "../../services/movies.service";
 import {Observable} from "rxjs";
-import {MovieDTO} from "../classes/movie-dto";
+import {MovieDTO} from "../../classes/movie-dto";
 import {MenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 
@@ -15,7 +15,7 @@ export class MoviesHistoryComponent implements OnInit{
   constructor(private moviesService: MoviesService, private router: Router) {
   }
   items: MenuItem[] = [];
-  movies: Observable<MovieDTO[]> = this.moviesService.getMovies()
+  movies: Observable<MovieDTO[]> = this.moviesService.getMovies(true)
 
   ngOnInit(): void {
     this.items = [
