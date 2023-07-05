@@ -1,10 +1,8 @@
 package com.cinemille.web;
 
-import com.cinemille.core.Movie;
-import com.cinemille.core.MovieDTO;
-import com.cinemille.core.MovieDateSpecification;
-import com.cinemille.core.MovieMapper;
+import com.cinemille.core.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -16,10 +14,13 @@ public class MovieController {
 
     private MovieFacadeImpl movieFacadeImpl;
     private MovieMapper mapper;
+    private CSVMoviesReader csvMoviesReader;
 
-    public MovieController(MovieFacadeImpl movieFacadeImpl, MovieMapper mapper) {
+    public MovieController(MovieFacadeImpl movieFacadeImpl, MovieMapper mapper, CSVMoviesReader csvMoviesReader) {
+
         this.movieFacadeImpl = movieFacadeImpl;
         this.mapper = mapper;
+        this.csvMoviesReader = csvMoviesReader;
     }
 
     @GetMapping("/movies")
@@ -31,5 +32,12 @@ public class MovieController {
         MovieDateSpecification movieDateSpecification = new MovieDateSpecification(startDate, endDate);
         List<Movie> allMovies = movieFacadeImpl.getAllMovies(movieDateSpecification);
         return allMovies.stream().map(mapper::toDto).toList();
+    }
+
+    @GetMapping("/import-movies")
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+    public ResponseEntity<Void> importCSV() {
+        csvMoviesReader.readAndSaveMovies();
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,9 +1,7 @@
 package com.cinemille.core;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Generated;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
@@ -12,7 +10,7 @@ import java.time.LocalDate;
 @Table
 public class Movie {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @NonNull
     private String title;
