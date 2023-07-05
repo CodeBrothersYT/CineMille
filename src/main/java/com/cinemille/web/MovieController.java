@@ -27,10 +27,11 @@ public class MovieController {
 
     @GetMapping("/movies")
     public List<MovieDTO> getAllMovies(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        MovieDateSpecification movieDateSpecification = new MovieDateSpecification(startDate);
+        MovieDateSpecification movieDateSpecification = new MovieDateSpecification(startDate, endDate);
         List<Movie> allMovies = movieFacadeImpl.getAllMovies(movieDateSpecification);
-        return allMovies.stream().map(movie -> mapper.toDto(movie)).toList();
+        return allMovies.stream().map(mapper::toDto).toList();
     }
 }

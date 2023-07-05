@@ -19,8 +19,4 @@ public class MovieFacadeImpl implements MovieFacade{
     public List<Movie> getAllMovies(Specification<Movie> specification) {
         return movieRepository.findAll(specification);
     }
-
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
-    }
 }
