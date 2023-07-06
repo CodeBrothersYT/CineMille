@@ -11,11 +11,11 @@ export class MoviesService {
   private baseURL = "http://localhost:8080/api/v1/movies"
   constructor(private httpClient: HttpClient) { }
 
-  getMovies(history: boolean): Observable<MovieDTO[]>{
-    return this.httpClient.get<MovieDTO[]>(`${this.baseURL}/${history}`)
+  getHistory(): Observable<MovieDTO[]>{
+    return this.httpClient.get<MovieDTO[]>(`${this.baseURL}/history`)
   }
 
-  createMovie(movieDTO: MovieDTO): Observable<MovieDTO>{
-    return this.httpClient.post<MovieDTO>(`${this.baseURL}`, movieDTO)
+  getAvailable(): Observable<MovieDTO[]>{
+    return this.httpClient.get<MovieDTO[]>(`${this.baseURL}`)
   }
 }

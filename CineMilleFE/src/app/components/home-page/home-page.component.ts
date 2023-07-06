@@ -16,7 +16,7 @@ export class HomePageComponent implements OnInit{
   constructor(private moviesService: MoviesService, private router: Router) {
   }
 
-  movies: Observable<MovieDTO[]> = this.moviesService.getMovies(false)
+  movies: Observable<MovieDTO[]> = this.moviesService.getAvailable()
 
   ngOnInit(): void {
     this.items = [

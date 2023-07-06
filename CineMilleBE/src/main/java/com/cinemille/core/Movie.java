@@ -1,5 +1,6 @@
 package com.cinemille.core;
 
+import com.opencsv.bean.CsvDate;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Generated;
 import org.springframework.lang.NonNull;
@@ -12,15 +13,15 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @NonNull
+    
     private String title;
-    @NonNull
+    
     private String description;
-    @NonNull
+    
     private int duration;
-    @NonNull
+    
     private LocalDate releaseDate;
-    @NonNull
+    
     private LocalDate endDate;
 
     public long getId() {
@@ -31,21 +32,21 @@ public class Movie {
         this.id = id;
     }
 
-    @NonNull
+    
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(@NonNull String title) {
+    public void setTitle( String title) {
         this.title = title;
     }
 
-    @NonNull
+    
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(@NonNull String description) {
+    public void setDescription( String description) {
         this.description = description;
     }
 
@@ -57,21 +58,33 @@ public class Movie {
         this.duration = duration;
     }
 
-    @NonNull
+    
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(@NonNull LocalDate releaseDate) {
+    public void setReleaseDate( LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    @NonNull
+    
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(@NonNull LocalDate endDate) {
+    public void setEndDate( LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                ", releaseDate=" + releaseDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

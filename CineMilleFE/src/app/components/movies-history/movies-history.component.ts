@@ -15,7 +15,7 @@ export class MoviesHistoryComponent implements OnInit{
   constructor(private moviesService: MoviesService, private router: Router) {
   }
   items: MenuItem[] = [];
-  movies: Observable<MovieDTO[]> = this.moviesService.getMovies(true)
+  movies: Observable<MovieDTO[]> = this.moviesService.getHistory();
 
   ngOnInit(): void {
     this.items = [

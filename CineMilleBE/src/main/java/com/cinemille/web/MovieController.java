@@ -1,53 +1,47 @@
 package com.cinemille.web;
 
 import com.cinemille.core.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/movies")
+@Validated
 public class MovieController {
 
-    private MovieFacadeImpl movieFacadeImpl;
+    private MovieFacade movieFacade;
     private MovieMapper mapper;
-    private CSVMoviesReader csvMoviesReader;
+    private CSVMovieParser csvMovieParser;
 
-    public MovieController(MovieFacadeImpl movieFacadeImpl, MovieMapper mapper, CSVMoviesReader csvMoviesReader) {
+    public MovieController(MovieFacadeImpl movieFacade, MovieMapper mapper, CSVMovieParser csvMovieParser) {
 
-        this.movieFacadeImpl = movieFacadeImpl;
+        this.movieFacade = movieFacade;
         this.mapper = mapper;
-        this.csvMoviesReader = csvMoviesReader;
+        this.csvMovieParser = csvMovieParser;
     }
 
-    @GetMapping("/movies/{history}")
-    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-    public List<MovieDTO> getAllMovies(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @PathVariable(required = false) boolean history) {
-
-        MovieDateSpecification movieDateSpecification = new MovieDateSpecification(startDate, endDate);
-
-        if(history){
-            return movieFacadeImpl.getAllMovies(movieDateSpecification)
+    @GetMapping("/history")
+    public List<MovieDTO> getHistory(Pageable pageable) {
+            return movieFacade.getHistoryMovies(pageable)
                     .stream()
-                    .filter(movie -> movie.getEndDate().isBefore(LocalDate.now())).map(mapper::toDto).toList();
-        }
-        return movieFacadeImpl.getAllMovies(movieDateSpecification)
-                .stream()
-                .filter(movie -> movie.getEndDate().isAfter(LocalDate.now()))
-                .map(mapper::toDto).toList();
-
+                    .map(mapper::toDto).toList();
     }
 
-    @GetMapping("/import-movies")
-    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-    public ResponseEntity<Void> importCSV() {
-        csvMoviesReader.readAndSaveMovies();
+    @GetMapping
+    public List<MovieDTO> listAll() {
+        return movieFacade.getAvailable()
+                .stream()
+                .map(mapper::toDto).toList();
+    }
+
+    @GetMapping("/import")
+    public ResponseEntity<Void> importCSV() throws FileNotFoundException {
+        csvMovieParser.readAndSave();
         return ResponseEntity.ok().build();
     }
 }
