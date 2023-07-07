@@ -16,10 +16,12 @@ import java.util.List;
 public class CSVMovieParser {
 
     private MovieFacadeImpl movieFacadeImpl;
-    private static final int MAX_AVAILABILITY_DAYS = 21;
 
-    public CSVMovieParser(MovieFacadeImpl movieFacadeImpl) {
+    private MovieProperties movieProperties;
+
+    public CSVMovieParser(MovieFacadeImpl movieFacadeImpl, MovieProperties movieProperties) {
         this.movieFacadeImpl = movieFacadeImpl;
+        this.movieProperties = movieProperties;
     }
 
     public void readAndSave(MultipartFile file) throws IOException {
@@ -37,8 +39,8 @@ public class CSVMovieParser {
 
         List<Movie> movies = csvToBean.parse();
         movies.forEach(movie -> {
-            if (Math.abs(ChronoUnit.DAYS.between(movie.getReleaseDate(), movie.getEndDate())) > MAX_AVAILABILITY_DAYS) {
-                throw new IllegalArgumentException("The start date and end date of a movie cannot be more than 3 weeks apart.");
+            if (Math.abs(ChronoUnit.DAYS.between(movie.getReleaseDate(), movie.getEndDate())) > movieProperties.getMaxAvailabilityDays()) {
+                throw new IllegalArgumentException("The start date and end date of a movie cannot be more than %d days apart.".formatted(movieProperties.getMaxAvailabilityDays()));
             }
         });
         movieFacadeImpl.saveAll(movies);
