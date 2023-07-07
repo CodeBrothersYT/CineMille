@@ -16,3 +16,6 @@ Per avviare la parte frontend, eseguire lo script `$ npm start` dalla directory 
 
 Per avviare la parte backend, lanciare l'applicazione Spring Boot eseguendo il plugin `$ spring-boot:run`.
 
+### Altro
+
+Sarà disponibile visualizzare un diagramma UML al percorso: `CineMilleBE/src/main/resources/CineMille_UML.pdf`.
