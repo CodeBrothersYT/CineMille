@@ -8,7 +8,7 @@ import {MovieDTO} from "../classes/movie-dto";
 })
 export class MoviesService {
 
-  private baseURL = "http://localhost:8080/api/v1/movies"
+  private baseURL = "/api/v1/movies"
   constructor(private httpClient: HttpClient) { }
 
   getHistory(): Observable<MovieDTO[]>{
