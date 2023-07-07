@@ -6,14 +6,11 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.time.LocalDate;
+import java.io.*;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class CSVMovieParser {
@@ -24,9 +21,11 @@ public class CSVMovieParser {
         this.movieFacadeImpl = movieFacadeImpl;
     }
 
-    public void readAndSave() throws FileNotFoundException {
+    public void readAndSave(MultipartFile file) throws IOException {
+        InputStream inputStream = file.getInputStream();
 
-        CSVReader csvReader = new CSVReader(new FileReader("CineMilleBE/src/main/resources/movies.csv"));
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        CSVReader csvReader = new CSVReader(reader);
 
         HeaderColumnNameMappingStrategy<Movie> beanStrategy = new HeaderColumnNameMappingStrategy<>();
         beanStrategy.setType(Movie.class);
