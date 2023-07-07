@@ -19,9 +19,9 @@ public class Movie {
     private String description;
     
     private int duration;
-    
+    @CsvDate(value = "yyyy-MM-dd")
     private LocalDate releaseDate;
-    
+    @CsvDate(value = "yyyy-MM-dd")
     private LocalDate endDate;
 
     public long getId() {

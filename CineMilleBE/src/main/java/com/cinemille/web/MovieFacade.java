@@ -10,6 +10,8 @@ import java.util.List;
 @Component
 public interface MovieFacade {
     List<Movie> saveAll(List<Movie> movies);
-    List<Movie> getAvailable();
-    Page<Movie>  getHistoryMovies(Pageable pageable);
+
+    Page<Movie> getAvailable(Pageable pageable);
+
+    Page<Movie> getHistoryMovies(Pageable pageable);
 }

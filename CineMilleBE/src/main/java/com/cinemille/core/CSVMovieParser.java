@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class CSVMovieParser {
@@ -32,6 +36,11 @@ public class CSVMovieParser {
                 .build();
 
         List<Movie> movies = csvToBean.parse();
+        movies.forEach(movie -> {
+            if (Math.abs(ChronoUnit.DAYS.between(movie.getReleaseDate(), movie.getEndDate())) > 21) {
+                throw new IllegalArgumentException("The start date and end date of a movie cannot be more than 3 weeks apart.");
+            }
+        });
         movieFacadeImpl.saveAll(movies);
     }
 }

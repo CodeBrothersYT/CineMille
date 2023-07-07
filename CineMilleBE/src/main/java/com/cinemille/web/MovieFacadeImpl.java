@@ -25,8 +25,8 @@ public final class MovieFacadeImpl implements MovieFacade {
     }
 
     @Override
-    public List<Movie> getAvailable() {
-        return movieRepository.findAll(Specification.not(new ExpiredMoviesSpecification()));
+    public Page<Movie> getAvailable(Pageable pageable) {
+        return movieRepository.findAll(Specification.not(new ExpiredMoviesSpecification()), pageable);
     }
 
     @Override

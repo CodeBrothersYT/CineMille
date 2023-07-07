@@ -13,6 +13,6 @@ public class ExpiredMoviesSpecification implements Specification<Movie> {
 
     @Override
     public Predicate toPredicate(Root<Movie> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-           return criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), LocalDate.now());
+           return criteriaBuilder.lessThan(root.get("endDate"), LocalDate.now());
     }
 }

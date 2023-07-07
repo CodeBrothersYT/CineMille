@@ -33,8 +33,8 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<MovieDTO> listAll() {
-        return movieFacade.getAvailable()
+    public List<MovieDTO> listAll(Pageable pageable) {
+        return movieFacade.getAvailable(pageable)
                 .stream()
                 .map(mapper::toDto).toList();
     }
