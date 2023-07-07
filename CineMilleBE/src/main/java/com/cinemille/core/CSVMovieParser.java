@@ -16,6 +16,7 @@ import java.util.List;
 public class CSVMovieParser {
 
     private MovieFacadeImpl movieFacadeImpl;
+    private static final int MAX_AVAILABILITY_DAYS = 21;
 
     public CSVMovieParser(MovieFacadeImpl movieFacadeImpl) {
         this.movieFacadeImpl = movieFacadeImpl;
@@ -36,7 +37,7 @@ public class CSVMovieParser {
 
         List<Movie> movies = csvToBean.parse();
         movies.forEach(movie -> {
-            if (Math.abs(ChronoUnit.DAYS.between(movie.getReleaseDate(), movie.getEndDate())) > 21) {
+            if (Math.abs(ChronoUnit.DAYS.between(movie.getReleaseDate(), movie.getEndDate())) > MAX_AVAILABILITY_DAYS) {
                 throw new IllegalArgumentException("The start date and end date of a movie cannot be more than 3 weeks apart.");
             }
         });
